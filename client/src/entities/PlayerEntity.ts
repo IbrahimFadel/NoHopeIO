@@ -5,7 +5,7 @@ import { EntityDirection } from './stateMembers/EntityDirection';
 
 export class PlayerEntity extends BaseEntitySprite {
   private readonly PLAYER_UPDATE_RATE: number = 8;
-  private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
+  private readonly PLAYER_DEFAULT_SPEED: number = 0.3475;
 	private cursors = {
   up: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
   down: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
