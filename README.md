@@ -14,3 +14,7 @@ Here is our big to-do list for the game:
 6. Tweening to compensate for low tick rate servers
 7. Level up bonuses
 8. Account currency system
+
+
+Template provided by 
+@TimTCrouch
