@@ -17,6 +17,6 @@
     "@types/socket.io-client": "^1.4.32",
     "webpack-cli": "^3.3.10",
     "ts-loader": "^5.3.3",
-    "typescript": "^3.3.3",
+    "typescript": "^3.3.3"
   }
 }
