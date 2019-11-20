@@ -1,55 +1,44 @@
+import PhaserLib from "../lib";
 
 
-class BulletEntity extends Phaser.GameObjects.Rectangle {
-    speed: number;
-    born: number;
-    direction: number;
-    xSpeed: number;
-    ySpeed: number;
+export default class BulletEntity extends Phaser.GameObjects.Rectangle {
+  private birthTime;
 
-
-    constructor(scene: any, x: number, y: number) {
-        super(scene, x, y);
-        this.speed = 1;
-        this.born = 0;
-        this.direction = 0;
-        this.xSpeed = 0;
-        this.ySpeed = 0;
-        this.setSize(12, 12);
-        this.width=2;
-        this.height=16;
-        this.fillColor= "0xff0000";
-
-    }
-    fire(shooter: Phaser.GameObjects.Sprite, target: { x: number, y: number }) {
-
-        this.setPosition(shooter.x, shooter.y); // Initial position
-        this.direction = Math.atan((target.x - this.x) / (target.y - this.y));
-        //some light randomness to the bullet angle
-        this.direction += ((Math.random() / 10) + (-(Math.random() / 10)));
-
-        // Calculate X and y velocity of bullet to moves it from shooter to target
-        if (target.y >= this.y) {
-            this.xSpeed = this.speed * Math.sin(this.direction);
-            this.ySpeed = this.speed * Math.cos(this.direction);
-        }
-        else {
-            this.xSpeed = -this.speed * Math.sin(this.direction);
-            this.ySpeed = -this.speed * Math.cos(this.direction);
-        }
-
-        this.rotation = shooter.rotation; // angle bullet with shooters rotation
-        this.born = 0;
+    constructor(scene, x, y, width, height, fillColor) {
+        super(scene, x, y, width, height, fillColor);
+        // ...
+        this.width=3;
+        this.height=6;
+        this.fillAlpha=150;
+        //this.alpha=255;
+        this.fillColor= 0xC68E17;
+        this.isFilled=true;
+        this.setOrigin(0.5);
     }
 
-    update(time: any, delta: number) {
-        this.x += this.xSpeed * delta;
-        this.y += this.ySpeed * delta;
-        this.born += delta;
-
-        if (this.born > 1500) {
-            this.setActive(false);
-            this.setVisible(false);
-        }
+    public Instantiate(location:Phaser.Math.Vector2, angle:number, velocity:number): void{
+      this.x=location.x;
+      this.y=location.y;
+      this.height = velocity;
+      this.rotation=(angle+90)*Math.PI/180;
+      var d = new Date();
+this.birthTime = d.getTime();
     }
+
+    public update(time:number,delta:number): void{
+      delta/=17;
+      var newLoc: Phaser.Math.Vector2;
+      newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y),this.rotation*180/Math.PI-90,this.height*delta);
+      this.x=newLoc.x;
+      this.y=newLoc.y;
+      this.height-=0.3*delta;
+      this.height*=1-0.02*delta;
+      if(this.height<10){
+      this.destroy();
+      var d = new Date();
+var n = d.getTime();
+      console.log(n-this.birthTime)
+    }
+    }
+
 }

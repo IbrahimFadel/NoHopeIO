@@ -1,13 +1,13 @@
 import BaseEntitySprite from './BaseEntitySprite';
-import BulletEntity from './BulletEntity';
 import { EntityDirection } from './stateMembers/EntityDirection';
-
-
+import BulletEntity from './BulletEntity';
+import PhaserLib from '../lib';
 
 export class PlayerEntity extends BaseEntitySprite {
   private readonly PLAYER_UPDATE_RATE: number = 8;
   private playerBullets: any;
   private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
+  private isShooting:boolean=false;
 	private cursors = {
   up: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
   down: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
@@ -18,7 +18,10 @@ export class PlayerEntity extends BaseEntitySprite {
   constructor(scene: Phaser.Scene, x: number, y: number, key: string, frame: number) {
     super(scene, x, y, key, frame);
     this.createAnimations();
-    this.playerBullets = this.getCurrentScene().add.group({ classType: BulletEntity, runChildUpdate: true });
+    this.playerBullets = this.getCurrentScene().add.group({ classType: BulletEntity as any, runChildUpdate: true });
+    //this.bulletTest = new Phaser.GameObjects.Rectangle(this.getCurrentScene(),300,300,100,100,0xFF0000,255);
+    //this.getCurrentScene().add.existing(this.bulletTest);
+    //this.bulletTest.setActive(true);
     this.setupShoot();
     //this.setupKeyboard();
     //this.setupLook();
@@ -38,19 +41,32 @@ export class PlayerEntity extends BaseEntitySprite {
 
   private setupShoot(): void {
   	this.getCurrentScene().input.on('pointerdown', function (pointer) {
-        let cursor = pointer;
-        let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
-        console.log(location);
-        let velocity = 2;
-        let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y)/Math.PI*180;
-  			this.fireBullet(angle,location,velocity);
+      this.isShooting=true;
+
   }, this);
+  this.getCurrentScene().input.on('pointerup', function (pointer) {
+    this.isShooting=false;
+}, this);
   }
 
-private fireBullet(angle: number, location: Phaser.Math.Vector2, velocity: number): void {
+private fireBullet(): void {
+  if(this.playerBullets.getLast(true)!=null&&(this.playerBullets.getLast(true).height>24||this.playerBullets.getLast(true).height==6))
+  return;
+  if(this.playerBullets.getLast(true)!=null)
+  console.log(this.playerBullets.getLast(true).height)
+    let cursor = this.getCurrentScene().input.mousePointer;
+    let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
+    let velocity = 28;
+    let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y)/Math.PI*180;
+
   let bullet = this.playerBullets.get();
   bullet.setActive(true).setVisible(true);
-  bullet.fire(this,this.getCurrentScene().input.mousePointer);
+  location=PhaserLib.findNewPoint(location, angle, 35);
+  angle=PhaserLib.spreadChange(angle,15);
+  this.kickBack(0,velocity);
+  bullet.Instantiate(location,angle,velocity);
+  //bullet.fire(this,this.getCurrentScene().input.mousePointer);
+
 }
 
   private updateLook(): void {
@@ -61,19 +77,21 @@ private fireBullet(angle: number, location: Phaser.Math.Vector2, velocity: numbe
   }
 
   private updatePlayerVelocity(delta: number): void {
+    var velocity = this.PLAYER_DEFAULT_SPEED;
+    if(this.playerBullets.getLast(true)!=null)
+    velocity*=14/this.playerBullets.getLast(true).height;
     if (this.cursors.left.isDown) {
-      this.setVelocityX(-this.PLAYER_DEFAULT_SPEED);
+      this.setVelocityX(-velocity);
     } else if (this.cursors.right.isDown) {
-      this.setVelocityX(this.PLAYER_DEFAULT_SPEED);
-			this.kickBack(0,20);
+      this.setVelocityX(velocity);
     } else {
       this.setVelocityX(0);
     }
 
     if (this.cursors.up.isDown) {
-      this.setVelocityY(-this.PLAYER_DEFAULT_SPEED);
+      this.setVelocityY(-velocity);
     } else if (this.cursors.down.isDown) {
-      this.setVelocityY(this.PLAYER_DEFAULT_SPEED);
+      this.setVelocityY(velocity);
     } else {
       this.setVelocityY(0);
     }
@@ -88,6 +106,9 @@ private fireBullet(angle: number, location: Phaser.Math.Vector2, velocity: numbe
   }
 
   public update(delta: number): void {
+    if(this.isShooting){
+      this.fireBullet();
+    }
     this.updateLook();
     this.updatePlayerVelocity(delta);
     this.setEntityDirection();

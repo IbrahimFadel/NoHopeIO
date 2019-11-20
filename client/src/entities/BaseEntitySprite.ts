@@ -4,6 +4,8 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 	private currentScene: Phaser.Scene;
 	private vx: number;
 	private vy: number;
+	private orgX: number = 24;
+	private orgY: number = 20;
 	private readonly spriteKey: string;
 	private entityDirection: EntityDirection = EntityDirection.none;
 
@@ -67,10 +69,14 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 	public updatePosition(delta: number): void {
 		this.x += this.vx * delta;
 		this.y += this.vy * delta;
+		if(this.displayOriginX!=this.orgX)
+		this.displayOriginX=(this.displayOriginX-this.orgX)*(1-0.15*delta/17)+this.orgX;
 	}
 
 	public kickBack(angle: number, force: number): void {
-
+		console.log(this.displayOriginX)
+		this.displayOriginX+=force*0.05;
+		this.displayOriginX=Math.max(this.displayOriginX,this.orgX+force*0.2);
 	}
 
 	public setAnimation(config: Phaser.Animations.Types.Animation, start: number, end:number): void {

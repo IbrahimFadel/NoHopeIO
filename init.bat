@@ -13,5 +13,5 @@ start npx webpack --watch
 cd ../server/dist/
 start npx tsc --watch
 cd ../../
-npx nodemon --watch / server/dist/server.js
+npx nodemon server/dist/server.js
 pause

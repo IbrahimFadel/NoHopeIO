@@ -15,7 +15,7 @@ export default class MainScene extends NetworkScene {
 
 	create(): void {
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
-		this.player.setDisplaySize(48*2,32*2).setOrigin(0.5,0.6);
+		this.player.setDisplaySize(48*2,32*2).setOrigin(0.5,0.624);
 	}
 
 	update(time: number, delta: number) {
