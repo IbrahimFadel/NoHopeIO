@@ -74,7 +74,6 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 	}
 
 	public kickBack(angle: number, force: number): void {
-		console.log(this.displayOriginX)
 		this.displayOriginX+=force*0.05;
 		this.displayOriginX=Math.max(this.displayOriginX,this.orgX+force*0.2);
 	}

@@ -37,7 +37,6 @@ this.birthTime = d.getTime();
       this.destroy();
       var d = new Date();
 var n = d.getTime();
-      console.log(n-this.birthTime)
     }
     }
 

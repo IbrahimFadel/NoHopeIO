@@ -9,8 +9,10 @@ export class PlayerEntity extends BaseEntitySprite {
   private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
   private isShooting:boolean=false;
   private updateIteration:number=30;
+  private randomSync;
   private positionIncrement:Phaser.Math.Vector2=new Phaser.Math.Vector2();
   private previousAngle:number=0;
+
 	private cursors = {
   up: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
   down: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
@@ -22,6 +24,7 @@ export class PlayerEntity extends BaseEntitySprite {
     super(scene, x, y, key, frame);
     this.createAnimations();
     this.playerBullets = this.getCurrentScene().add.group({ classType: BulletEntity as any, runChildUpdate: true });
+    this.randomSync = new PhaserLib.Random(123);
     //this.bulletTest = new Phaser.GameObjects.Rectangle(this.getCurrentScene(),300,300,100,100,0xFF0000,255);
     //this.getCurrentScene().add.existing(this.bulletTest);
     //this.bulletTest.setActive(true);
@@ -46,19 +49,20 @@ export class PlayerEntity extends BaseEntitySprite {
   	this.getCurrentScene().input.on('pointerdown', function (pointer) {
       this.isShooting=true;
 this.getCurrentScene().game.input.mouse.requestPointerLock();
+console.log(this.randomSync.nextNumber())
+
   }, this);
   this.getCurrentScene().input.on('pointerup', function (pointer) {
     this.isShooting=false;
 }, this);
 this.getCurrentScene().input.on('pointermove', function (pointer) {
   //this.updateIteration--;
-  if(Phaser.Math.Distance.Squared(0,0,this.positionIncrement.x+pointer.movementX,this.positionIncrement.y+pointer.movementY)<800){
+  if(Phaser.Math.Distance.Squared(0,0,this.positionIncrement.x+pointer.movementX,this.positionIncrement.y+pointer.movementY)<1600){
   this.positionIncrement.x+=pointer.movementX;
   this.positionIncrement.y+=pointer.movementY;
 }else {
-  this.positionIncrement = PhaserLib.findNewPoint(this.positionIncrement,Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y)/Math.PI*180,-2);
+  this.positionIncrement = PhaserLib.findNewPoint(this.positionIncrement,Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y)/Math.PI*180,-3);
 }
-console.log(this.positionIncrement)
   this.rotation=Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y);
   // if(this.updateIteration<0){
   //       //if (!this.getCurrentScene().game.input.mouse.locked)
@@ -84,8 +88,6 @@ console.log(this.positionIncrement)
 private fireBullet(): void {
   if(this.playerBullets.getLast(true)!=null&&(this.playerBullets.getLast(true).height>24||this.playerBullets.getLast(true).height==6))
   return;
-  if(this.playerBullets.getLast(true)!=null)
-  console.log(this.playerBullets.getLast(true).height)
     let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
     let velocity = 28;
     let angle = this.rotation*180/Math.PI;
