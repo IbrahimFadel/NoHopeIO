@@ -9,6 +9,9 @@ export default class ConnectScene extends Phaser.Scene {
 	preload() {
 		this.load.spritesheet('player', 'assets/images/characters/player.png',
 			{frameWidth: 48, frameHeight: 32});
+
+		this.load.spritesheet('zombie1', 'assets/images/characters/player.png',
+				{frameWidth: 48, frameHeight: 32});
 	}
 
 	create() {
