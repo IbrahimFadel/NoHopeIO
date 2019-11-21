@@ -51,27 +51,33 @@ this.getCurrentScene().game.input.mouse.requestPointerLock();
     this.isShooting=false;
 }, this);
 this.getCurrentScene().input.on('pointermove', function (pointer) {
-  this.updateIteration--;
+  //this.updateIteration--;
+  if(Phaser.Math.Distance.Squared(0,0,this.positionIncrement.x+pointer.movementX,this.positionIncrement.y+pointer.movementY)<800){
   this.positionIncrement.x+=pointer.movementX;
   this.positionIncrement.y+=pointer.movementY;
-  if(this.updateIteration<0){
-        //if (!this.getCurrentScene().game.input.mouse.locked)
-        {
-
-            let angle = Phaser.Math.Angle.Between(0, 0, this.positionIncrement.x, this.positionIncrement.y);
-            this.positionIncrement.x=0;
-            this.positionIncrement.y=0;
-            //this.angle=angle/Math.PI*180
-            console.log((angle/Math.PI*180-this.previousAngle/Math.PI*180))
-            if(((angle/Math.PI*180-this.previousAngle/Math.PI*180)<180&&(angle/Math.PI*180-this.previousAngle/Math.PI*180)>-180))
-            this.angle = (this.previousAngle/Math.PI*180+angle/Math.PI*180)/2;
-            else
-            this.angle = -((360-this.previousAngle/Math.PI*180-angle/Math.PI*180)/2+this.previousAngle/Math.PI*180)+180;
-
-            this.previousAngle=angle;
-        }
-        this.updateIteration = 10;
-      }
+}else {
+  this.positionIncrement = PhaserLib.findNewPoint(this.positionIncrement,Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y)/Math.PI*180,-2);
+}
+console.log(this.positionIncrement)
+  this.rotation=Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y);
+  // if(this.updateIteration<0){
+  //       //if (!this.getCurrentScene().game.input.mouse.locked)
+  //       {
+  //
+  //           let angle = Phaser.Math.Angle.Between(0, 0, this.positionIncrement.x, this.positionIncrement.y);
+  //           this.positionIncrement.x=0;
+  //           this.positionIncrement.y=0;
+  //           //this.angle=angle/Math.PI*180
+  //           console.log((angle/Math.PI*180-this.previousAngle/Math.PI*180))
+  //           if(((angle/Math.PI*180-this.previousAngle/Math.PI*180)<180&&(angle/Math.PI*180-this.previousAngle/Math.PI*180)>-180))
+  //           this.angle = (this.previousAngle/Math.PI*180+angle/Math.PI*180)/2;
+  //           else
+  //           this.angle = -((360-this.previousAngle/Math.PI*180-angle/Math.PI*180)/2+this.previousAngle/Math.PI*180)+180;
+  //
+  //           this.previousAngle=angle;
+  //       }
+  //       this.updateIteration = 10;
+  //     }
       }, this);
   }
 
