@@ -8,6 +8,9 @@ export class PlayerEntity extends BaseEntitySprite {
   private playerBullets: any;
   private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
   private isShooting:boolean=false;
+  private updateIteration:number=30;
+  private positionIncrement:Phaser.Math.Vector2=new Phaser.Math.Vector2();
+  private previousAngle:number=0;
 	private cursors = {
   up: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
   down: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
@@ -42,11 +45,34 @@ export class PlayerEntity extends BaseEntitySprite {
   private setupShoot(): void {
   	this.getCurrentScene().input.on('pointerdown', function (pointer) {
       this.isShooting=true;
-
+this.getCurrentScene().game.input.mouse.requestPointerLock();
   }, this);
   this.getCurrentScene().input.on('pointerup', function (pointer) {
     this.isShooting=false;
 }, this);
+this.getCurrentScene().input.on('pointermove', function (pointer) {
+  this.updateIteration--;
+  this.positionIncrement.x+=pointer.movementX;
+  this.positionIncrement.y+=pointer.movementY;
+  if(this.updateIteration<0){
+        //if (!this.getCurrentScene().game.input.mouse.locked)
+        {
+
+            let angle = Phaser.Math.Angle.Between(0, 0, this.positionIncrement.x, this.positionIncrement.y);
+            this.positionIncrement.x=0;
+            this.positionIncrement.y=0;
+            //this.angle=angle/Math.PI*180
+            console.log((angle/Math.PI*180-this.previousAngle/Math.PI*180))
+            if(((angle/Math.PI*180-this.previousAngle/Math.PI*180)<180&&(angle/Math.PI*180-this.previousAngle/Math.PI*180)>-180))
+            this.angle = (this.previousAngle/Math.PI*180+angle/Math.PI*180)/2;
+            else
+            this.angle = -((360-this.previousAngle/Math.PI*180-angle/Math.PI*180)/2+this.previousAngle/Math.PI*180)+180;
+
+            this.previousAngle=angle;
+        }
+        this.updateIteration = 10;
+      }
+      }, this);
   }
 
 private fireBullet(): void {
@@ -54,10 +80,9 @@ private fireBullet(): void {
   return;
   if(this.playerBullets.getLast(true)!=null)
   console.log(this.playerBullets.getLast(true).height)
-    let cursor = this.getCurrentScene().input.mousePointer;
     let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
     let velocity = 28;
-    let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y)/Math.PI*180;
+    let angle = this.rotation*180/Math.PI;
 
   let bullet = this.playerBullets.get();
   bullet.setActive(true).setVisible(true);
@@ -72,7 +97,7 @@ private fireBullet(): void {
   private updateLook(): void {
     let cursor = this.getCurrentScene().input.mousePointer;
     let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y) / Math.PI * 180;
-    this.angle = angle;
+    //this.angle = angle;
 
   }
 
