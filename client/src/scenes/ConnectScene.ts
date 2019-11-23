@@ -16,12 +16,13 @@ export default class ConnectScene extends Phaser.Scene {
 
 	create() {
 		this.add.sprite(400, 300, 'phaserLogo');
+		setTimeout(() => {
+			this.scene.start('Main');
+		}, 100);
 	}
 
 	update() {
 		//simulate connecting to server for now
-		setTimeout(() => {
-			this.scene.start('Main');
-		}, 100);
+
 	}
 }

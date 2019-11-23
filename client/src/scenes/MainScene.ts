@@ -21,7 +21,7 @@ private enemyZombies: any;
 this.enemyZombies = this.add.group({ classType: ZombieEntity as any, runChildUpdate: true });
 		let zombie = this.enemyZombies.get();
 zombie.Instantiate(new Phaser.Math.Vector2(200,200),180,0);
-console.log(zombie)
+console.log("zombie")
 	}
 
 	update(time: number, delta: number) {

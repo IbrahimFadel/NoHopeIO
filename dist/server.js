@@ -7,18 +7,16 @@ const http = require('http').Server(app);
 const path = require('path');
 const io = require('socket.io')(http);
 const port = 8080;
-
 app.use(express.static(path.join(__dirname, '/public')));
 //app.use("/bundle.js", express.static(__dirname + '/bundle.js'));
-app.get( "/", ( req, res ) => {
-	console.log(__dirname+"tesst");
-	res.sendFile(path.join( __dirname, '/public/index.html'));
-} );
-
-io.on('connection', socket => {
-	console.log('A cliient connected!');
+app.get("/", (req, res) => {
+    console.log(__dirname + "tesst");
+    res.sendFile(path.join(__dirname, '/public/index.html'));
 });
-
-http.listen( port, () => {
-	console.log( `server started at http://localhost:${ port }` );
-} );
+io.on('connection', socket => {
+    console.log('A cliient connected!');
+});
+http.listen(port, () => {
+    console.log(`server started at http://localhost:${port}`);
+});
+//# sourceMappingURL=server.js.map
