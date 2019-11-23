@@ -49,7 +49,7 @@ export class PlayerEntity extends BaseEntitySprite {
   	this.getCurrentScene().input.on('pointerdown', function (pointer) {
       this.isShooting=true;
 this.getCurrentScene().game.input.mouse.requestPointerLock();
-console.log(this.randomSync.nextNumber())
+console.log(this.randomSync.nextNumber()+1)
 
   }, this);
   this.getCurrentScene().input.on('pointerup', function (pointer) {
@@ -89,7 +89,7 @@ private fireBullet(): void {
   if(this.playerBullets.getLast(true)!=null&&(this.playerBullets.getLast(true).height>24||this.playerBullets.getLast(true).height==6))
   return;
     let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
-    let velocity = 28;
+    let velocity = 29;
     let angle = this.rotation*180/Math.PI;
 
   let bullet = this.playerBullets.get();
