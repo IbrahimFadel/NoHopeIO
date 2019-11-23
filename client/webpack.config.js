@@ -25,7 +25,7 @@ module.exports = {
     externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
-        "phaser": "Phaser"
+        "phaser": "Phaser.min"
     },
     optimization: {
     minimizer: [
