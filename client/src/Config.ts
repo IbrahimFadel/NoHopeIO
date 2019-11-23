@@ -9,9 +9,6 @@ export default new Config({
 	pixelArt: true,
 	autoCenter: true,
 	backgroundColor: "#2d2d2d",
-	fps: {
-		target: 20,
-	},
 	physics: {
       default: 'arcade',
       arcade: {
