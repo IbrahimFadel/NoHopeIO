@@ -57,11 +57,11 @@ console.log(this.randomSync.nextNumber()+1)
 }, this);
 this.getCurrentScene().input.on('pointermove', function (pointer) {
   //this.updateIteration--;
-  if(Phaser.Math.Distance.Squared(0,0,this.positionIncrement.x+pointer.movementX,this.positionIncrement.y+pointer.movementY)<1600){
+  if(Phaser.Math.Distance.Squared(0,0,this.positionIncrement.x+pointer.movementX,this.positionIncrement.y+pointer.movementY)<2000){
   this.positionIncrement.x+=pointer.movementX;
   this.positionIncrement.y+=pointer.movementY;
 }else {
-  this.positionIncrement = PhaserLib.findNewPoint(this.positionIncrement,Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y)/Math.PI*180,-3);
+  this.positionIncrement = PhaserLib.findNewPoint(this.positionIncrement,Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y)/Math.PI*180,-4);
 }
   this.rotation=Phaser.Math.Angle.Between(0,0,this.positionIncrement.x, this.positionIncrement.y);
   // if(this.updateIteration<0){
