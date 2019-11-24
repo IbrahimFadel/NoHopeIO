@@ -1,18 +1,25 @@
 import {NetworkScene} from "./NetworkScene";
 import {PlayerEntity} from '../entities/PlayerEntity';
 import {ZombieEntity} from '../entities/ZombieEntity';
+import NetworkManager from '../managers/networkManager';
 
 export default class MainScene extends NetworkScene {
 private enemyZombies: any;
 	private player: PlayerEntity;
+	private socket: NetworkManager;
 
-	constructor() {
+	constructor(data) {
 		super({
-			key: 'Main'
+			key: 'Main',
 		});
 	}
 
+	init(data): void {
+		this.socket = data.socket;
+	}
+
 	preload(): void {
+		this.socket.sendName("Sir Raum");
 	}
 
 	create(): void {

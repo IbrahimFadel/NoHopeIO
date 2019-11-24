@@ -6,7 +6,7 @@ export default new Config({
 	disableContextMenu: true,
 	scale: {
     width: 1024,
-    height: 768,
+    height: 600,
     // zoom: 1,
     // resolution: 1,
     // parent: null,

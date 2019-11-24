@@ -1,9 +1,12 @@
+import NetworkManager from '../managers/networkManager';
 /**
  * This Scene will be used for connecting to the server, preloading assets and setting some initial values retrieved.
  */
 export default class ConnectScene extends Phaser.Scene {
+	private socket: NetworkManager;
 	constructor(params) {
 		super(params);
+		this.socket = new NetworkManager();
 	}
 
 	preload() {
@@ -17,8 +20,8 @@ export default class ConnectScene extends Phaser.Scene {
 	create() {
 		this.add.sprite(400, 300, 'phaserLogo');
 		setTimeout(() => {
-			this.scene.start('Main');
-		}, 100);
+			this.scene.start('Main', {socket: this.socket});
+		}, 300);
 	}
 
 	update() {

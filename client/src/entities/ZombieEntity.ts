@@ -10,7 +10,7 @@ export class ZombieEntity extends BaseEntitySprite {
     super(scene, x, y, key, frame);
         // ...
           this.setTexture("zombie1");
-          this.tint = 0xcc2345;
+          this.tint = 0x299611;
           this.blendMode = Phaser.BlendModes.ADD;
 
         this.width=100;

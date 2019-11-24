@@ -5,6 +5,7 @@ import ConnectScene from './scenes/ConnectScene';
 import MainScene from './scenes/MainScene';
 
 class Game extends Phaser.Game {
+
 	constructor(conf) {
 		super(conf);
 

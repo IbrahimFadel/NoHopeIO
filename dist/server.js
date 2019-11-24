@@ -14,7 +14,14 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 io.on('connection', socket => {
-    console.log('A cliient connected!');
+    console.log('a user connected');
+    console.log(Object.keys(io.sockets.connected).length);
+    socket.on('disconnect', function () {
+        console.log('user disconnected');
+    });
+    socket.on('name', event => {
+        console.log(event);
+    });
 });
 http.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
