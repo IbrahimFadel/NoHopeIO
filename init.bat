@@ -10,8 +10,8 @@ cd ../
 :SKIPINSTALL
 cd client
 start npx webpack --watch
-cd ../server/dist/
+cd ../server/
 start npx tsc --watch
-cd ../../
-npx nodemon server/dist/server.js
+cd ../
+npx nodemon dist/server.js
 pause

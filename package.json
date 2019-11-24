@@ -2,11 +2,11 @@
   "name": "multiplayerphaserts",
   "version": "1.0.0",
   "description": "Start webpack with 'webpack --watch' in client, 'tsc --watch' in server/dist and then start node server",
-  "main": "server/dist/server.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start": "npm run build && webpack-dev-server --port=8000"
+    "build": "webpack --config client && tsc --watch server/server",
+    "start": "npm run build && nodemon dist/server.js"
   },
   "author": "",
   "license": "ISC",

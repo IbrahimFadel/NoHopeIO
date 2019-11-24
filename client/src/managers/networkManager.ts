@@ -1,15 +1,51 @@
 import * as socketio from 'socket.io-client';
 
-class NetworkManager {
-	public io: SocketIOClient.Socket;
+export default class NetworkManager {
+  private io: SocketIOClient.Socket;
+  public data: number;
+  public rand: number;
 
-	public constructor() {
+  public constructor() {
+    console.log("Called ONCE!");
+this.rand=Math.random();
+  }
 
-	}
+  public connectUser() {
+    console.log("Try connecting");
+    this.io = socketio(
+      'http://' + window.location.hostname + ':8080',
+      {
+        autoConnect: false,
+        reconnection: false
+      }
+    );
+    this.io.on('connect_error', () => {
+      setTimeout(() => {
+        this.connectUser();
+      }, 2000);
+    });
+    this.io.open();
+    this.io.on('connect', () => {
+      this.rand=Math.random();
+      console.log(this.io.connected+"number="+this.rand); // true
 
-	public connectUser() {
-		console.log("Try connecting");
-		this.io = socketio('http://192.168.0.12:8080');
-		console.log("Tried connecting");
-	}
+    });
+    this.io.on('data', (data: number)=> {
+      this.data = data;
+
+    });
+    this.io.on('disconnect', () => {
+      this.io.removeAllListeners();
+      this.io.close();
+      this.connectUser();
+    });
+  }
+
+  public getData(): number {
+    return this.data;
+  }
+
+  public sendName(name: String): void {
+    this.io.emit('name', name);
+  }
 }
