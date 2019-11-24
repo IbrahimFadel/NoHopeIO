@@ -7,6 +7,15 @@ const http = require('http').Server(app);
 const path = require('path');
 const io = require('socket.io')(http);
 const port = 8080;
+let tickTimer = setInterval(function(){ timer() }, 1000);
+
+function timer() {
+io.emit('data',Object.keys(io.sockets.connected).length);
+}
+
+function stopFunction() {
+    clearInterval(tickTimer);
+}
 
 app.use(express.static(path.join(__dirname, '/public')));
 //app.use("/bundle.js", express.static(__dirname + '/bundle.js'));
@@ -25,6 +34,8 @@ io.on('connection', socket => {
 		console.log(event);
 	})
 });
+
+
 
 http.listen( port, () => {
 	console.log( `server started at http://localhost:${ port }` );

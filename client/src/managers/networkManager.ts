@@ -2,13 +2,15 @@ import * as socketio from 'socket.io-client';
 
 export default class NetworkManager {
   private io: SocketIOClient.Socket;
+  public data: number;
+  public rand: number;
 
   public constructor() {
     console.log("Called ONCE!");
-    this.connectUser();
+this.rand=Math.random();
   }
 
-  private connectUser() {
+  public connectUser() {
     console.log("Try connecting");
     this.io = socketio(
       'http://' + window.location.hostname + ':8080',
@@ -24,13 +26,23 @@ export default class NetworkManager {
     });
     this.io.open();
     this.io.on('connect', () => {
-      console.log(this.io.connected); // true
+      this.rand=Math.random();
+      console.log(this.io.connected+"number="+this.rand); // true
+
+    });
+    this.io.on('data', (data: number)=> {
+      this.data = data;
+
     });
     this.io.on('disconnect', () => {
       this.io.removeAllListeners();
       this.io.close();
       this.connectUser();
     });
+  }
+
+  public getData(): number {
+    return this.data;
   }
 
   public sendName(name: String): void {

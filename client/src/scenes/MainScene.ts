@@ -8,18 +8,20 @@ private enemyZombies: any;
 	private player: PlayerEntity;
 	private socket: NetworkManager;
 
-	constructor(data) {
+	constructor() {
 		super({
 			key: 'Main',
 		});
 	}
 
-	init(data): void {
-		this.socket = data.socket;
+	init(): void {
+		this.socket = new NetworkManager();
+		this.socket.connectUser();
 	}
 
 	preload(): void {
-		this.socket.sendName("Sir Raum");
+		this.socket.sendName("Siir Raum");
+
 	}
 
 	create(): void {
@@ -33,5 +35,7 @@ console.log("zombie")
 
 	update(time: number, delta: number) {
 		this.player.update(delta);
+		//if(time%10==1)
+		console.log("onUpdate="+this.socket.getData());
 	}
 }
