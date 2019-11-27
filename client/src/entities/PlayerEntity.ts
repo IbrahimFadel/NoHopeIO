@@ -112,7 +112,7 @@ private fireBullet(): void {
   private updatePlayerVelocity(delta: number): void {
     var velocity = this.PLAYER_DEFAULT_SPEED;
     if(this.playerBullets.getLast(true)!=null)
-    velocity*=14/this.playerBullets.getLast(true).height;
+    velocity*=12/this.playerBullets.getLast(true).height;
     if (this.cursors.left.isDown) {
       this.setVelocityX(-velocity);
     } else if (this.cursors.right.isDown) {

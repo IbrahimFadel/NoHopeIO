@@ -13,18 +13,18 @@ export class ZombieEntity extends BaseEntitySprite {
 
 
           this.tint = 0x299611;
-          this.blendMode = Phaser.BlendModes.ADD;
+          //this.blendMode = Phaser.BlendModes.ADD;
 
 
         this.width=100;
         this.height=100;
-        this.setOrigin(0.5);
+        //this.setOrigin(0.0);
     }
 
     public Instantiate(location:Phaser.Math.Vector2, angle:number, velocity:number): void{
       this.x=location.x;
       this.y=location.y;
-      this.height = velocity;
+      //this.height = velocity;
       this.rotation=(angle+90)*Math.PI/180;
       var d = new Date();
 this.birthTime = d.getTime();
