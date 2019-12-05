@@ -77,7 +77,7 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 		this.y += this.vy * delta;
 		if(this.displayOriginX!=this.orgX)
 		this.displayOriginX=(this.displayOriginX-this.orgX)*(1-0.15*delta/17)+this.orgX;
-		this.getCurrentScene().cameras.main.setZoom((this.displayOriginX-this.orgX)*0.008+1);
+		this.getCurrentScene().cameras.main.setZoom((this.displayOriginX-this.orgX)*0.008+0.85);
 
 	}
 
@@ -92,7 +92,7 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 		//this.getCurrentScene().cameras.main.flashEffect.start(30,200,150,120,true);
 	}
 
-	public setAnimation(config: Phaser.Animations.Types.Animation, start: number, end:number): void {
+	public setAnimation(config: Phaser.Types.Animations.Animation, start: number, end:number): void {
 		config.frames = this.currentScene.anims.generateFrameNumbers(this.spriteKey, {start, end});
 		this.currentScene.anims.create(config);
 	}

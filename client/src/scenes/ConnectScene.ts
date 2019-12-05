@@ -18,6 +18,8 @@ export default class ConnectScene extends Phaser.Scene {
 				{frameWidth: 48, frameHeight: 32});
 
 		this.load.image('tilesets', 'assets/images/tilesets/out-extruded.png');
+		this.load.image("mask", "https://labs.phaser.io/assets/sprites/mask1.png")
+	//	https://labs.phaser.io/assets/sprites/mask1.png
 		this.load.tilemapTiledJSON('maps', 'assets/maps/Town1.json');
 	}
 

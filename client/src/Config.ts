@@ -32,7 +32,7 @@ export default new Config({
 
     antialias: true,
     pixelArt: true,
-    roundPixels: false,
+    roundPixels: true,
     transparent: false,
     clearBeforeRender: true,
     premultipliedAlpha: false,
@@ -41,7 +41,7 @@ export default new Config({
     batchSize: 2000,
     maxLights: 10
   },
-	backgroundColor: "#2d2d2d",
+	backgroundColor: "#111111",
 	physics: {
       default: 'arcade',
       arcade: {

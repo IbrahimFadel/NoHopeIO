@@ -45,7 +45,17 @@ layer.setScale(1);
 		this.player.setDisplaySize(48*1,32*1).setOrigin(0.5,0.624).setScale(1.1);
 	this.cameras.main.startFollow(this.player.offsetLocation,true,0.03,0.03,0,0);
 	this.cameras.main.alpha=1;
-	this.cameras.main.setZoom(0.4);
+//	this.cameras.main.setZoom(0.4);
+	var spotlight = this.make.sprite({
+        x: 160,
+        y: 160,
+        key: 'mask',
+        add: false
+    });
+		spotlight.scale = 2.5;
+		let test:(Phaser.Cameras.Scene2D.BaseCamera);
+		this.cameras.main.setMask(new Phaser.Display.Masks.BitmapMask(this, spotlight));
+
 this.enemyZombies = this.add.group({ classType: ZombieEntity as any, runChildUpdate: true });
 		let zombie = this.enemyZombies.get();
 zombie.Instantiate(new Phaser.Math.Vector2(200,200),180,0);
@@ -78,6 +88,7 @@ console.log("zombie")
 
 	update(time: number, delta: number) {
 		this.player.update(delta);
+		this.cameras.main.setRotation(Math.sin(this.player.y/200)/12+Math.cos(this.player.x/200)/12);
 		//if(time%10==1)
 		if(this.socket.lastUpdate==true){
 			this.socket.lastUpdate=false;

@@ -106,9 +106,9 @@ private fireBullet(): void {
   private updateLook(): void {
     //let cursor = this.getCurrentScene().input.mousePointer;
     //let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y) / Math.PI * 180;
-    let offset = (-(this.displayOriginX-24)*0.2+1)*60;
+    let offset = (-(this.displayOriginX-24)*0.2+1)*80;
     if(this.getEntityDirection()!=EntityDirection.none){
-    offset*=0.15;
+    offset*=0.35;
 
   }
     let coords = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y), this.rotation*180/Math.PI, offset);
