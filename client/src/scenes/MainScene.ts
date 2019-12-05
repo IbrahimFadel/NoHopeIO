@@ -26,7 +26,7 @@ private enemyZombies: any;
 	init(): void {
 		this.socket = new NetworkManager();
 		this.socket.connectUser();
-	//	this.cameras.main.setRenderToTexture("Pixelate");
+
 	}
 
 	preload(): void {
@@ -37,12 +37,13 @@ private enemyZombies: any;
 		var map = this.make.tilemap({ key: 'maps'});
 	 var tileset = map.addTilesetImage('cybernoid','tilesets');
 	 var layer = map.createStaticLayer(0, tileset, 0, 0); // layer index, tileset, x, y
+layer.setScale(1);
 		this.times = new Array();
 		this.angles = new Array();
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
 		this.player.setDisplaySize(48*1,32*1).setOrigin(0.5,0.624).setScale(0.9);
-
+	this.cameras.main.startFollow(this.player);
 this.enemyZombies = this.add.group({ classType: ZombieEntity as any, runChildUpdate: true });
 		let zombie = this.enemyZombies.get();
 zombie.Instantiate(new Phaser.Math.Vector2(200,200),180,0);
