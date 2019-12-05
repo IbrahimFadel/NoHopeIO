@@ -42,15 +42,17 @@ layer.setScale(1);
 		this.angles = new Array();
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
-		this.player.setDisplaySize(48*1,32*1).setOrigin(0.5,0.624).setScale(0.9);
-	this.cameras.main.startFollow(this.player);
+		this.player.setDisplaySize(48*1,32*1).setOrigin(0.5,0.624).setScale(1.1);
+	this.cameras.main.startFollow(this.player.offsetLocation,true,0.03,0.03,0,0);
+	this.cameras.main.alpha=1;
+	this.cameras.main.setZoom(0.4);
 this.enemyZombies = this.add.group({ classType: ZombieEntity as any, runChildUpdate: true });
 		let zombie = this.enemyZombies.get();
 zombie.Instantiate(new Phaser.Math.Vector2(200,200),180,0);
-zombie.setDisplaySize(48*1,32*1).setOrigin(0.2,0.1).setScale(0.7);
+zombie.setDisplaySize(48*1,32*1).setOrigin(0.2,0.1).setScale(1);
 this.tweens.add({
         targets: this.player,
-        scale: 0.85,
+        scale: 1.05,
         ease: 'Quad.easeInOut',
         duration: 500,
         paused: false,

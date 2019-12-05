@@ -1,4 +1,5 @@
 import {EntityDirection} from './stateMembers/EntityDirection';
+import PhaserLib from '../lib';
 
 export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 	private currentScene: Phaser.Scene;
@@ -67,15 +68,28 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 	}
 
 	public updatePosition(delta: number): void {
+		if(this.vx!=0&&this.vy!=0)
+		{
+			this.vx*=2/3;
+			this.vy*=2/3;
+		}
 		this.x += this.vx * delta;
 		this.y += this.vy * delta;
 		if(this.displayOriginX!=this.orgX)
 		this.displayOriginX=(this.displayOriginX-this.orgX)*(1-0.15*delta/17)+this.orgX;
+		this.getCurrentScene().cameras.main.setZoom((this.displayOriginX-this.orgX)*0.008+1);
+
 	}
 
 	public kickBack(angle: number, force: number): void {
 		this.displayOriginX+=force*0.05;
 		this.displayOriginX=Math.max(this.displayOriginX,this.orgX+force*0.2);
+		let knockCoord = new Phaser.Math.Vector2();
+		knockCoord = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),angle,-force/12);
+		this.x += knockCoord.x;
+		this.y += knockCoord.y;
+		this.getCurrentScene().cameras.main.shakeEffect.start(40,0.008,true);
+		//this.getCurrentScene().cameras.main.flashEffect.start(30,200,150,120,true);
 	}
 
 	public setAnimation(config: Phaser.Animations.Types.Animation, start: number, end:number): void {

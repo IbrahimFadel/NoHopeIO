@@ -6,8 +6,8 @@ export default new Config({
 	disableContextMenu: true,
 	autoFocus: true,
 	scale: {
-    width: 256,
-    height: 256,
+    width: 320,
+    height: 320,
 		parent: "game",
 		fullscreenTarget: "game",
     // zoom: 1,
@@ -30,8 +30,8 @@ export default new Config({
   },
 	render: {
 
-    antialias: false,
-    pixelArt: false,
+    antialias: true,
+    pixelArt: true,
     roundPixels: false,
     transparent: false,
     clearBeforeRender: true,

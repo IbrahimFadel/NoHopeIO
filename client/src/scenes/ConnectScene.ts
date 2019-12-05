@@ -17,7 +17,7 @@ export default class ConnectScene extends Phaser.Scene {
 		this.load.spritesheet('zombie1', 'assets/images/characters/player.png',
 				{frameWidth: 48, frameHeight: 32});
 
-		this.load.image('tilesets', 'assets/images/tilesets/out.png');
+		this.load.image('tilesets', 'assets/images/tilesets/out-extruded.png');
 		this.load.tilemapTiledJSON('maps', 'assets/maps/Town1.json');
 	}
 

@@ -6,12 +6,13 @@ import PhaserLib from '../lib';
 export class PlayerEntity extends BaseEntitySprite {
   private readonly PLAYER_UPDATE_RATE: number = 8;
   private playerBullets: any;
-  private readonly PLAYER_DEFAULT_SPEED: number = 0.1475/2;
+  private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
   private isShooting:boolean=false;
   private updateIteration:number=30;
   private randomSync;
   private positionIncrement:Phaser.Math.Vector2=new Phaser.Math.Vector2();
   private previousAngle:number=0;
+  public offsetLocation: Phaser.GameObjects.Shape = new Phaser.GameObjects.Shape(this.getCurrentScene(),"reticle");
 
 	private cursors = {
   up: this.getCurrentScene().input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
@@ -96,15 +97,24 @@ private fireBullet(): void {
   bullet.setActive(true).setVisible(true);
   location=PhaserLib.findNewPoint(location, angle, 35);
   angle=PhaserLib.spreadChange(angle,15);
-  this.kickBack(0,velocity);
+  this.kickBack(angle,velocity);
   bullet.Instantiate(location,angle,velocity);
   //bullet.fire(this,this.getCurrentScene().input.mousePointer);
 
 }
 
   private updateLook(): void {
-    let cursor = this.getCurrentScene().input.mousePointer;
-    let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y) / Math.PI * 180;
+    //let cursor = this.getCurrentScene().input.mousePointer;
+    //let angle = Phaser.Math.Angle.Between(this.x, this.y, cursor.x, cursor.y) / Math.PI * 180;
+    let offset = (-(this.displayOriginX-24)*0.2+1)*60;
+    if(this.getEntityDirection()!=EntityDirection.none){
+    offset*=0.15;
+
+  }
+    let coords = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y), this.rotation*180/Math.PI, offset);
+    this.offsetLocation.x = coords.x;
+    this.offsetLocation.y = coords.y;
+
     //this.angle = angle;
 
   }
