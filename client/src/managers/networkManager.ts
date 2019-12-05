@@ -4,10 +4,13 @@ import PlayerData from "./playerData";
 export default class NetworkManager {
   private io: SocketIOClient.Socket;
   public data: any;
+  public prevData: any;
   public rand: number;
+  public lastUpdate: boolean = false;
 
   public constructor() {
     console.log("Called ONCE!");
+    this.lastUpdate = true;
 this.rand=Math.random();
   }
 
@@ -32,7 +35,9 @@ this.rand=Math.random();
 
     });
     this.io.on('data', (data: any)=> {
+      this.prevData = this.data;
       this.data = data;
+      this.lastUpdate = true;
     });
     this.io.on('disconnect', () => {
       this.io.removeAllListeners();

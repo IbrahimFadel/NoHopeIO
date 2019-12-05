@@ -13,11 +13,12 @@ const http = require('http').Server(app);
 const path = require('path');
 const io = require('socket.io')(http);
 const port = 10578;
-let tickTimer = setInterval(function () { timer(); }, 100);
+const TPS = 10;
+let tickTimer = setInterval(function () { timer(); }, 1000 / TPS);
 const players = {};
 var id;
 function timer() {
-    console.log(players);
+    //  console.log(players)
     //if(players.length>0){
     io.emit('data', players);
     //console.log(players);
