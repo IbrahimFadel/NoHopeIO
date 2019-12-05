@@ -7,8 +7,8 @@ export default class BulletEntity extends Phaser.GameObjects.Rectangle {
     constructor(scene, x, y, width, height, fillColor) {
         super(scene, x, y, width, height, fillColor);
         // ...
-        this.width=3;
-        this.height=6;
+        this.width=1;
+        this.height=4;
         this.fillAlpha=150;
         //this.alpha=255;
         this.fillColor= 0xC68E17;

@@ -6,6 +6,7 @@ import {ZombieEntity} from '../entities/ZombieEntity';
 import NetworkManager from '../managers/networkManager';
 import PlayerData from "../managers/playerData";
 import PhaserLib from '../lib';
+import PixelatePipeline from '../entities/PixelatePipeline';
 
 
 export default class MainScene extends NetworkScene {
@@ -25,11 +26,11 @@ private enemyZombies: any;
 	init(): void {
 		this.socket = new NetworkManager();
 		this.socket.connectUser();
+	//	this.cameras.main.setRenderToTexture("Pixelate");
 	}
 
 	preload(): void {
 		this.socket.sendName("Siir Raum");
-
 	}
 
 	create(): void {
@@ -37,11 +38,21 @@ private enemyZombies: any;
 		this.angles = new Array();
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
-		this.player.setDisplaySize(48*2,32*2).setOrigin(0.5,0.624);
+		this.player.setDisplaySize(48*1,32*1).setOrigin(0.5,0.624).setScale(0.9);
+
 this.enemyZombies = this.add.group({ classType: ZombieEntity as any, runChildUpdate: true });
 		let zombie = this.enemyZombies.get();
 zombie.Instantiate(new Phaser.Math.Vector2(200,200),180,0);
-zombie.setDisplaySize(48*2,32*2).setOrigin(0.2,0.1);
+zombie.setDisplaySize(48*1,32*1).setOrigin(0.2,0.1).setScale(0.7);
+this.tweens.add({
+        targets: this.player,
+        scale: 0.85,
+        ease: 'Quad.easeInOut',
+        duration: 500,
+        paused: false,
+				loop: -1,
+				yoyo: true
+    });
 // zombie.tween = this.tweens.add({
 //         targets: zombie,
 //         x: zombie.x,
@@ -73,13 +84,12 @@ console.log("zombie")
 						this.times[id] = 0;
 						this.angles[id] = 0;
 					}
-					console.log(this.socket.getData()[id].rotation+" "+this.socket.prevData[id].rotation)
 					if(this.socket.getData()[id].rotation!=this.socket.prevData[id].rotation){
 						this.enemyZombies.getLast(true).tweenRotation = this.tweens.add({
 						        targets: this.enemyZombies.getLast(true),
 						        rotation: this.socket.getData()[id].rotation,
-						        ease: 'Power1',
-						        duration: 60,
+						        ease: 'Quad.easeOut',
+						        duration: 40,
 						        paused: false,
 										loop: 0
 						    });
