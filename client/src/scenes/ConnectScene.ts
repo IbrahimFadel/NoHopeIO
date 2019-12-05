@@ -15,6 +15,9 @@ export default class ConnectScene extends Phaser.Scene {
 
 		this.load.spritesheet('zombie1', 'assets/images/characters/player.png',
 				{frameWidth: 48, frameHeight: 32});
+
+		this.load.image('tilesets', 'assets/images/tilesets/out.png');
+		this.load.tilemapTiledJSON('maps', 'assets/maps/Town1.json');
 	}
 
 	create() {
@@ -22,6 +25,7 @@ export default class ConnectScene extends Phaser.Scene {
 		setTimeout(() => {
 			this.scene.start('Main', {socket: this.socket});
 		}, 300);
+
 	}
 
 	update() {

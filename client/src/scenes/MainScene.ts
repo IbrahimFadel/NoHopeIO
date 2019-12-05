@@ -33,6 +33,9 @@ private enemyZombies: any;
 	}
 
 	create(): void {
+		var map = this.make.tilemap({ key: 'maps'});
+	 var tileset = map.addTilesetImage('cybernoid','tilesets');
+	 var layer = map.createStaticLayer(0, tileset, 0, 0); // layer index, tileset, x, y
 		this.times = new Array();
 		this.angles = new Array();
 

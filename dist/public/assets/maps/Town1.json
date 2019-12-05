@@ -14,7 +14,6 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":2,
  "nextobjectid":1,
  "orientation":"orthogonal",
  "renderorder":"right-down",
@@ -22,8 +21,17 @@
  "tileheight":32,
  "tilesets":[
         {
-         "firstgid":1,
-         "source":"..\/Tiles\/Start.tsx"
+           "columns":3,
+           "firstgid":1,
+           "image":"..\/tilesets\/out.png",
+           "imageheight":96,
+           "imagewidth":96,
+           "margin":0,
+           "name":"cybernoid",
+           "spacing":0,
+           "tilecount":9,
+           "tileheight":32,
+           "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",
