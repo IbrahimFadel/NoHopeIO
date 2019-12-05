@@ -6,7 +6,7 @@ import PhaserLib from '../lib';
 export class PlayerEntity extends BaseEntitySprite {
   private readonly PLAYER_UPDATE_RATE: number = 8;
   private playerBullets: any;
-  private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
+  private readonly PLAYER_DEFAULT_SPEED: number = 0.1475/2;
   private isShooting:boolean=false;
   private updateIteration:number=30;
   private randomSync;

@@ -3,6 +3,7 @@ import config from './Config';
 import BootScene from './scenes/BootScene';
 import ConnectScene from './scenes/ConnectScene';
 import MainScene from './scenes/MainScene';
+import PixelatePipeline from './entities/PixelatePipeline';
 
 class Game extends Phaser.Game {
 
@@ -13,10 +14,11 @@ class Game extends Phaser.Game {
 		this.scene.add('Connect', ConnectScene);
 		this.scene.add('Main', MainScene);
 		this.scene.start('Boot');
-		Phaser.Display.Canvas.CanvasInterpolation.setCrisp(this.canvas)
+		//Phaser.Display.Canvas.CanvasInterpolation.setCrisp(this.canvas)
 	}
 }
 
 window.addEventListener("load", () => {
 	var game = new Game(config);
+	
 });
