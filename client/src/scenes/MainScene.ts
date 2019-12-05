@@ -73,7 +73,17 @@ console.log("zombie")
 						this.times[id] = 0;
 						this.angles[id] = 0;
 					}
-						console.log(this.times[id])
+					console.log(this.socket.getData()[id].rotation+" "+this.socket.prevData[id].rotation)
+					if(this.socket.getData()[id].rotation!=this.socket.prevData[id].rotation){
+						this.enemyZombies.getLast(true).tweenRotation = this.tweens.add({
+						        targets: this.enemyZombies.getLast(true),
+						        rotation: this.socket.getData()[id].rotation,
+						        ease: 'Power1',
+						        duration: 60,
+						        paused: false,
+										loop: 0
+						    });
+					}
 					if(this.socket.getData()[id].x!=this.socket.prevData[id].x||this.socket.getData()[id].y!=this.socket.prevData[id].y){
 						this.times[id]++;
 						let predPoint = new Phaser.Math.Vector2(this.socket.getData()[id].x,this.socket.getData()[id].y);
@@ -110,6 +120,7 @@ console.log("zombie")
 					}
 					this.times[id] = 0;
 				}}
+
 				//this.enemyZombies.getLast(true).x=this.socket.getData()[id].x;
 			//	this.enemyZombies.getLast(true).y=this.socket.getData()[id].y;
 				this.enemyZombies.getLast(true).rotation=this.socket.getData()[id].rotation;
