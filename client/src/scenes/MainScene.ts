@@ -125,7 +125,7 @@ console.log("zombie")
 						        x: predPoint.x,
 						        y: predPoint.y,
 						        ease: 'Power0',
-						        duration: 100,
+						        duration: 150,
 						        paused: false,
 										loop: 0
 						    });

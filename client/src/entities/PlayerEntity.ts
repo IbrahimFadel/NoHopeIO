@@ -4,11 +4,11 @@ import BulletEntity from './BulletEntity';
 import PhaserLib from '../lib';
 
 export class PlayerEntity extends BaseEntitySprite {
-  private readonly PLAYER_UPDATE_RATE: number = 8;
+  private readonly PLAYER_UPDATE_RATE: number = 12;
   private playerBullets: any;
   private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
   private isShooting:boolean=false;
-  private updateIteration:number=30;
+//  private updateIteration:number=30;
   private randomSync;
   private positionIncrement:Phaser.Math.Vector2=new Phaser.Math.Vector2();
   private previousAngle:number=0;
