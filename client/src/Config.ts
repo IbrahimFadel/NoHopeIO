@@ -2,7 +2,7 @@ import 'phaser';
 import Config = Phaser.Core.Config;
 
 export default new Config({
-	type: Phaser.WEBGL,
+	type: Phaser.CANVAS,
 	disableContextMenu: true,
 	autoFocus: true,
 	scale: {

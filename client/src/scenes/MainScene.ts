@@ -38,11 +38,21 @@ private enemyZombies: any;
 	 var tileset = map.addTilesetImage('cybernoid','tilesets');
 	 var layer = map.createStaticLayer(0, tileset, 0, 0); // layer index, tileset, x, y
 layer.setScale(1);
+map.setCollisionBetween(4,4);
 		this.times = new Array();
 		this.angles = new Array();
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
-		this.player.setDisplaySize(48*1,32*1).setOrigin(0.5,0.624).setScale(1.1);
+		this.physics.add.collider(this.player, layer);
+		this.physics.add.collider(this.player.playerBullets, layer);
+		var debugGraphics = this.add.graphics();
+
+		map.renderDebug(debugGraphics, {
+            tileColor: null, // Non-colliding tiles
+            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 200), // Colliding tiles
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Colliding face edges
+        });
+
 	this.cameras.main.startFollow(this.player.offsetLocation,true,0.03,0.03,0,0);
 	this.cameras.main.alpha=1;
 //	this.cameras.main.setZoom(0.4);

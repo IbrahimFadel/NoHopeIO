@@ -5,7 +5,7 @@ import PhaserLib from '../lib';
 
 export class PlayerEntity extends BaseEntitySprite {
   private readonly PLAYER_UPDATE_RATE: number = 12;
-  private playerBullets: any;
+  public playerBullets: any;
   private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
   private isShooting:boolean=false;
 //  private updateIteration:number=30;
@@ -26,10 +26,20 @@ export class PlayerEntity extends BaseEntitySprite {
     this.createAnimations();
     this.playerBullets = this.getCurrentScene().add.group({ classType: BulletEntity as any, runChildUpdate: true });
     this.randomSync = new PhaserLib.Random(123);
+    this.setDisplaySize(48,32);
+    this.setOrigin(0.5,0.624);
+    this.setScale(1.1);
+
     //this.bulletTest = new Phaser.GameObjects.Rectangle(this.getCurrentScene(),300,300,100,100,0xFF0000,255);
     //this.getCurrentScene().add.existing(this.bulletTest);
     //this.bulletTest.setActive(true);
     this.setupShoot();
+    this.getCurrentScene().physics.add.existing(this);
+    this.getCurrentScene().physics.add.existing(this.playerBullets);
+    (this.body as Phaser.Physics.Arcade.Body).setSize(this.height/2,this.height/2);
+    //(this.body as Phaser.Physics.Arcade.Body).setOffset(20,20);
+    console.log("offset: "+this.originX+" "+this.originY+" "+this.displayOriginX+" "+this.displayOriginY+" ");
+    (this.body as Phaser.Physics.Arcade.Body).setOffset(this.displayOriginX-this.height/4,this.displayOriginY-this.height/4);
     //this.setupKeyboard();
     //this.setupLook();
   }

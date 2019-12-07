@@ -14,6 +14,7 @@ export default class BulletEntity extends Phaser.GameObjects.Rectangle {
         this.fillColor= 0xB67E07;
         this.isFilled=true;
         this.setOrigin(0.5);
+
     }
 
     public Instantiate(location:Phaser.Math.Vector2, angle:number, velocity:number): void{
@@ -23,14 +24,20 @@ export default class BulletEntity extends Phaser.GameObjects.Rectangle {
       this.rotation=(angle+90)*Math.PI/180;
       var d = new Date();
 this.birthTime = d.getTime();
+this.scene.physics.add.existing(this);
+(this.body as Phaser.Physics.Arcade.Body).setSize(3,3);
+(this.body as Phaser.Physics.Arcade.Body).setOffset(1,4);
     }
 
     public update(time:number,delta:number): void{
       delta/=17;
       var newLoc: Phaser.Math.Vector2;
-      newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y),this.rotation*180/Math.PI-90,this.height*delta);
-      this.x=newLoc.x;
-      this.y=newLoc.y;
+      // newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y),this.rotation*180/Math.PI-90,this.height*delta);
+      newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),this.rotation*180/Math.PI-90,this.height*delta);
+      (this.body as Phaser.Physics.Arcade.Body).setVelocityX(newLoc.x *8);
+      (this.body as Phaser.Physics.Arcade.Body).setVelocityY(newLoc.y *8);
+      // this.x=newLoc.x;
+      // this.y=newLoc.y;
       this.height-=0.3*delta;
       this.height*=1-0.02*delta;
       if(this.height<10){

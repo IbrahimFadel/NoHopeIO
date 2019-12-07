@@ -73,8 +73,8 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 			this.vx*=2/3;
 			this.vy*=2/3;
 		}
-		this.x += this.vx * delta;
-		this.y += this.vy * delta;
+		(this.body as Phaser.Physics.Arcade.Body).setVelocityX(this.vx *800);
+		(this.body as Phaser.Physics.Arcade.Body).setVelocityY(this.vy *800);
 		if(this.displayOriginX!=this.orgX)
 		this.displayOriginX=(this.displayOriginX-this.orgX)*(1-0.15*delta/17)+this.orgX;
 		this.getCurrentScene().cameras.main.setZoom((this.displayOriginX-this.orgX)*0.008+0.85);
@@ -86,8 +86,8 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 		this.displayOriginX=Math.max(this.displayOriginX,this.orgX+force*0.2);
 		let knockCoord = new Phaser.Math.Vector2();
 		knockCoord = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),angle,-force/12);
-		this.x += knockCoord.x;
-		this.y += knockCoord.y;
+		(this.body as Phaser.Physics.Arcade.Body).setVelocityX(/*knockCoord.x*/ 8000);
+		(this.body as Phaser.Physics.Arcade.Body).setVelocityY(knockCoord.y *800);
 		this.getCurrentScene().cameras.main.shakeEffect.start(40,0.008,true);
 		//this.getCurrentScene().cameras.main.flashEffect.start(30,200,150,120,true);
 	}
