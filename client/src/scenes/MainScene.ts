@@ -7,6 +7,7 @@ import NetworkManager from '../managers/networkManager';
 import PlayerData from "../managers/playerData";
 import PhaserLib from '../lib';
 import PixelatePipeline from '../entities/PixelatePipeline';
+import BulletEntity from "../entities/BulletEntity";
 
 
 export default class MainScene extends NetworkScene {
@@ -36,15 +37,34 @@ private enemyZombies: any;
 	create(): void {
 		var map = this.make.tilemap({ key: 'maps'});
 	 var tileset = map.addTilesetImage('cybernoid','tilesets');
-	 var layer = map.createStaticLayer(0, tileset, 0, 0); // layer index, tileset, x, y
+	 var layer = map.createStaticLayer("bg", tileset, 0, 0); // layer index, tileset, x, y
+	 var walls = map.createStaticLayer("wl", tileset, 0, 0); // layer index, tileset, x, y
+	 walls.setCollision(4);
 layer.setScale(1);
-map.setCollisionBetween(4,4);
+//map.setCollisionBetween(4,4);
+//walls.setCollision(true);
 		this.times = new Array();
 		this.angles = new Array();
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
-		this.physics.add.collider(this.player, layer);
-		this.physics.add.collider(this.player.playerBullets, layer);
+		this.physics.add.collider(this.player, walls);
+		this.physics.add.collider(this.player.playerBullets, walls);
+		walls.setTileIndexCallback(4, bullet => {
+			if(!(bullet instanceof BulletEntity))
+			return;
+			console.log("Collided");
+			//console.log(bullet);
+			(bullet as BulletEntity).collidesWall();
+		}, this);
+		// var wallBullet = this.physics.add.collider(this.player.playerBullets, walls, bullet => {
+		// 	console.log("Collided");
+		// 	(bullet as BulletEntity).collidesWall();
+		// });
+		//wallBullet.overlapOnly = true;
+		// this.physics.add.overlap(this.player.playerBullets, layer, bullet => {
+		// 	console.log("Collided overllap");
+		// 	(bullet as BulletEntity).collidesWall();
+		// });
 		var debugGraphics = this.add.graphics();
 
 		map.renderDebug(debugGraphics, {

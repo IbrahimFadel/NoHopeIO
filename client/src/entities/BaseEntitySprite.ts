@@ -82,13 +82,13 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 	}
 
 	public kickBack(angle: number, force: number): void {
-		this.displayOriginX+=force*0.05;
-		this.displayOriginX=Math.max(this.displayOriginX,this.orgX+force*0.2);
-		let knockCoord = new Phaser.Math.Vector2();
-		knockCoord = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),angle,-force/12);
-		(this.body as Phaser.Physics.Arcade.Body).setVelocityX(/*knockCoord.x*/ 8000);
-		(this.body as Phaser.Physics.Arcade.Body).setVelocityY(knockCoord.y *800);
-		this.getCurrentScene().cameras.main.shakeEffect.start(40,0.008,true);
+		//this.displayOriginX+=force*0.05;
+		//this.displayOriginX=Math.max(this.displayOriginX,this.orgX+force*0.2);
+		// let knockCoord = new Phaser.Math.Vector2();
+		// knockCoord = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),angle,-force/12);
+		// (this.body as Phaser.Physics.Arcade.Body).setVelocityX(knockCoord.x*80);
+		// (this.body as Phaser.Physics.Arcade.Body).setVelocityY(knockCoord.y *80);
+		this.getCurrentScene().cameras.main.shakeEffect.start(60,0.012,true);
 		//this.getCurrentScene().cameras.main.flashEffect.start(30,200,150,120,true);
 	}
 

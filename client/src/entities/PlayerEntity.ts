@@ -29,6 +29,8 @@ export class PlayerEntity extends BaseEntitySprite {
     this.setDisplaySize(48,32);
     this.setOrigin(0.5,0.624);
     this.setScale(1.1);
+    this.setDepth(3);
+
 
     //this.bulletTest = new Phaser.GameObjects.Rectangle(this.getCurrentScene(),300,300,100,100,0xFF0000,255);
     //this.getCurrentScene().add.existing(this.bulletTest);
@@ -97,7 +99,7 @@ this.getCurrentScene().input.on('pointermove', function (pointer) {
   }
 
 private fireBullet(): void {
-  if(this.playerBullets.getLast(true)!=null&&(this.playerBullets.getLast(true).height>24||this.playerBullets.getLast(true).height==6))
+  if(this.playerBullets.getLast(true)!=null&&(this.playerBullets.getLast(true).height>20||this.playerBullets.getLast(true).height==6))
   return;
     let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
     let velocity = 29;

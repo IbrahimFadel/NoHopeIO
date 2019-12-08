@@ -2,7 +2,7 @@ import 'phaser';
 import Config = Phaser.Core.Config;
 
 export default new Config({
-	type: Phaser.CANVAS,
+	type: Phaser.WEBGL,
 	disableContextMenu: true,
 	autoFocus: true,
 	scale: {
@@ -45,7 +45,7 @@ export default new Config({
 	physics: {
       default: 'arcade',
       arcade: {
-          debug: true
+          debug: false
       }
   },
 	parent: "game"
