@@ -1,4 +1,5 @@
 import PhaserLib from "../lib";
+import MainScene from "../scenes/MainScene";
 
 
 export default class BulletEntity extends Phaser.GameObjects.Rectangle {
@@ -22,6 +23,8 @@ export default class BulletEntity extends Phaser.GameObjects.Rectangle {
     }
 
     public Instantiate(location:Phaser.Math.Vector2, angle:number, velocity:number): void{
+      let scene: MainScene = (this.scene as MainScene);
+      if( scene.map.getTileAtWorldXY( location.x, location.y, true, scene.cameras.main, "foreground").index!=-1 ) { this.collidesWall();      return;}
       this.x=location.x;
       this.y=location.y;
       this.height = velocity;
@@ -37,7 +40,7 @@ this.scene.physics.add.existing(this);
 
     public update(time:number,delta:number): void{
       delta/=17;
-      console.log(delta);
+      //console.log(delta);
       var newLoc: Phaser.Math.Vector2;
       // newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y),this.rotation*180/Math.PI-90,this.height*delta);
       newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),this.rotation*180/Math.PI-90,this.height);

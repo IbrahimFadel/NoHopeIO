@@ -17,6 +17,7 @@ private enemyZombies: any;
 	private timeStamp: number = 0;
 	private times: number[];
 	private angles: number[];
+	public map: Phaser.Tilemaps.Tilemap;
 
 	constructor() {
 		super({
@@ -35,10 +36,10 @@ private enemyZombies: any;
 	}
 
 	create(): void {
-		var map = this.make.tilemap({ key: 'maps'});
-	 var tileset = map.addTilesetImage('cybernoid','tilesets');
-	 var layer = map.createStaticLayer("bg", tileset, 0, 0); // layer index, tileset, x, y
-	 var walls = map.createStaticLayer("wl", tileset, 0, 0); // layer index, tileset, x, y
+		this.map = this.make.tilemap({ key: 'maps'});
+	 var tileset = this.map.addTilesetImage('cybernoid','tilesets');
+	 var layer = this.map.createStaticLayer("background", tileset, 0, 0); // layer index, tileset, x, y
+	 var walls = this.map.createStaticLayer("foreground", tileset, 0, 0); // layer index, tileset, x, y
 	 walls.setCollision(4);
 layer.setScale(1);
 //map.setCollisionBetween(4,4);
@@ -48,14 +49,17 @@ layer.setScale(1);
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
 		this.physics.add.collider(this.player, walls);
-		this.physics.add.collider(this.player.playerBullets, walls);
-		walls.setTileIndexCallback(4, bullet => {
-			if(!(bullet instanceof BulletEntity))
-			return;
-			console.log("Collided");
-			//console.log(bullet);
+		this.physics.add.collider(this.player.playerBullets, walls, bullet => {
 			(bullet as BulletEntity).collidesWall();
-		}, this);
+		});
+		// walls.setTileIndexCallback(4, (bullet,tile) => {
+		// 	if(!(bullet instanceof BulletEntity))
+		// 	return;
+		// 	console.log("Collided");
+		// 	//console.log(bullet);
+		// 	//layer.shuffle( (tile as Phaser.Tilemaps.Tile).x-1 , (tile as Phaser.Tilemaps.Tile).y-1 , 3 , 3);
+		// 	(bullet as BulletEntity).collidesWall();
+		// }, this);
 		// var wallBullet = this.physics.add.collider(this.player.playerBullets, walls, bullet => {
 		// 	console.log("Collided");
 		// 	(bullet as BulletEntity).collidesWall();
@@ -67,7 +71,7 @@ layer.setScale(1);
 		// });
 		var debugGraphics = this.add.graphics();
 
-		map.renderDebug(debugGraphics, {
+		this.map.renderDebug(debugGraphics, {
             tileColor: null, // Non-colliding tiles
             collidingTileColor: new Phaser.Display.Color(243, 134, 48, 200), // Colliding tiles
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Colliding face edges
