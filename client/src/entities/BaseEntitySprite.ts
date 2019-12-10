@@ -88,7 +88,6 @@ export default class BaseEntitySprite extends Phaser.GameObjects.Sprite {
 		// knockCoord = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),angle,-force/12);
 		// (this.body as Phaser.Physics.Arcade.Body).setVelocityX(knockCoord.x*80);
 		// (this.body as Phaser.Physics.Arcade.Body).setVelocityY(knockCoord.y *80);
-		this.getCurrentScene().cameras.main.shakeEffect.start(60,0.012,true);
 		//this.getCurrentScene().cameras.main.flashEffect.start(30,200,150,120,true);
 	}
 

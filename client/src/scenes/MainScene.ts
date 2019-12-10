@@ -12,7 +12,7 @@ import BulletEntity from "../entities/BulletEntity";
 
 export default class MainScene extends NetworkScene {
 private enemyZombies: any;
-	private player: PlayerEntity;
+	public player: PlayerEntity;
 	private socket: NetworkManager;
 	private timeStamp: number = 0;
 	private times: number[];
@@ -49,10 +49,12 @@ layer.setScale(1);
 
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
 		this.physics.add.collider(this.player, walls);
-		this.physics.add.collider(this.player.playerBullets, walls, bullet => {
-			console.log("collided");
-			(bullet as BulletEntity).collidesWall();
-		});
+		var line = new Phaser.Geom.Line(20,20,200,300);
+		var graphics = this.add.graphics({ lineStyle: { width: 4, color: 0x33bb77 } });
+		graphics.strokeLineShape(line);
+
+
+		console.log(walls.getTilesWithinShape(line,{isColliding:true}));
 		// walls.setTileIndexCallback(4, (bullet,tile) => {
 		// 	if(!(bullet instanceof BulletEntity))
 		// 	return;
@@ -74,8 +76,9 @@ layer.setScale(1);
 
 		this.map.renderDebug(debugGraphics, {
             tileColor: null, // Non-colliding tiles
-            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 200), // Colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Colliding face edges
+            collidingTileColor: null, // Colliding tiles
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Colliding face edges,
+
         });
 
 	this.cameras.main.startFollow(this.player.offsetLocation,true,0.03,0.03,0,0);

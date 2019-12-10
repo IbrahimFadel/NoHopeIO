@@ -40,7 +40,6 @@ export class PlayerEntity extends BaseEntitySprite {
     //this.bulletTest.setActive(true);
     this.setupShoot();
     this.getCurrentScene().physics.add.existing(this);
-    this.getCurrentScene().physics.add.existing(this.playerBullets);
     (this.body as Phaser.Physics.Arcade.Body).setSize(this.height/2,this.height/2);
     //(this.body as Phaser.Physics.Arcade.Body).setOffset(20,20);
     console.log("offset: "+this.originX+" "+this.originY+" "+this.displayOriginX+" "+this.displayOriginY+" ");
@@ -103,7 +102,7 @@ this.getCurrentScene().input.on('pointermove', function (pointer) {
 
 private fireBullet(): void {
   var curTime = Date.now();
-  if(this.shootTime+100>=curTime)
+  if(this.shootTime+200>=curTime)
   return;
   this.mag--;
   this.shootTime = curTime;
@@ -115,7 +114,6 @@ private fireBullet(): void {
   bullet.setActive(true).setVisible(true);
   location=PhaserLib.findNewPoint(location, angle, 22);
   angle=PhaserLib.spreadChange(angle,15);
-  this.kickBack(angle,velocity);
   bullet.Instantiate(location,angle,velocity);
   //bullet.fire(this,this.getCurrentScene().input.mousePointer);
 

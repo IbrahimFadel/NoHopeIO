@@ -45,7 +45,7 @@ export default new Config({
 	physics: {
       default: 'arcade',
       arcade: {
-          debug: true
+          debug: false
       }
   },
 	parent: "game"

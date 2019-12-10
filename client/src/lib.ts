@@ -10,6 +10,40 @@ export default class PhaserLib {
     return result;
   }
 
+  public static lineLength(line: Phaser.Geom.Line){
+    return Phaser.Math.Distance.Between(line.x1,line.y1,line.x2,line.y2);
+  }
+
+  public static lineAngle(line: Phaser.Geom.Line){
+    return Phaser.Math.Angle.Between(line.x1,line.y1,line.x2,line.y2);
+  }
+
+  public static closest(sourceX, sourceY, objs) {
+  var i = objs.length;
+  var closest = null;
+  var max = Infinity;
+  //console.log(i);
+
+  while (i--) {
+    var obj = objs[i];
+    if(obj instanceof Phaser.Tilemaps.Tile)
+    obj = new Phaser.Math.Vector2((obj as Phaser.Tilemaps.Tile).pixelX+16,(obj as Phaser.Tilemaps.Tile).pixelY+16);
+
+    if (!obj) {
+      continue;
+    }
+
+    var dist = Phaser.Math.Distance.Squared(sourceX, sourceY, obj.x, obj.y);
+
+    if (dist < max) {
+      closest = obj;
+      max = dist;
+    }
+  }
+
+  return closest;
+}
+
   public static spreadChange(angle:number,spreadCone:number):number {
     var result = Math.pow((Math.random() * (spreadCone) - spreadCone/2), 3) / Math.pow(spreadCone/2,2);
     result+=angle;
