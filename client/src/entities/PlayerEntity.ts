@@ -8,6 +8,9 @@ export class PlayerEntity extends BaseEntitySprite {
   public playerBullets: any;
   private readonly PLAYER_DEFAULT_SPEED: number = 0.1475;
   private isShooting:boolean=false;
+  private shootTime: number = 0;
+  private mag: number = 20;
+  private consecShots: number = 1;
 //  private updateIteration:number=30;
   private randomSync;
   private positionIncrement:Phaser.Math.Vector2=new Phaser.Math.Vector2();
@@ -99,15 +102,18 @@ this.getCurrentScene().input.on('pointermove', function (pointer) {
   }
 
 private fireBullet(): void {
-  if(this.playerBullets.getLast(true)!=null&&(this.playerBullets.getLast(true).height>20||this.playerBullets.getLast(true).height==6))
+  var curTime = Date.now();
+  if(this.shootTime+100>=curTime)
   return;
+  this.mag--;
+  this.shootTime = curTime;
     let location: Phaser.Math.Vector2 = new Phaser.Math.Vector2(this.x,this.y);
     let velocity = 29;
     let angle = this.rotation*180/Math.PI;
 
   let bullet = this.playerBullets.get();
   bullet.setActive(true).setVisible(true);
-  location=PhaserLib.findNewPoint(location, angle, 35);
+  location=PhaserLib.findNewPoint(location, angle, 22);
   angle=PhaserLib.spreadChange(angle,15);
   this.kickBack(angle,velocity);
   bullet.Instantiate(location,angle,velocity);
@@ -133,8 +139,8 @@ private fireBullet(): void {
 
   private updatePlayerVelocity(delta: number): void {
     var velocity = this.PLAYER_DEFAULT_SPEED;
-    if(this.playerBullets.getLast(true)!=null)
-    velocity*=12/this.playerBullets.getLast(true).height;
+    //velocity*=12/this.playerBullets.getLast(true).height;
+    velocity*=Math.min((Date.now()-this.shootTime)/150,1);
     if (this.cursors.left.isDown) {
       this.setVelocityX(-velocity);
     } else if (this.cursors.right.isDown) {

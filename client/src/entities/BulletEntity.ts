@@ -24,7 +24,8 @@ export default class BulletEntity extends Phaser.GameObjects.Rectangle {
 
     public Instantiate(location:Phaser.Math.Vector2, angle:number, velocity:number): void{
       let scene: MainScene = (this.scene as MainScene);
-      if( scene.map.getTileAtWorldXY( location.x, location.y, true, scene.cameras.main, "foreground").index!=-1 ) { this.collidesWall();      return;}
+      var tile = scene.map.getTileAtWorldXY( location.x, location.y, true, scene.cameras.main, "foreground");
+      if( tile!=null&&tile.index!=-1 ) { this.collidesWall();      return;}
       this.x=location.x;
       this.y=location.y;
       this.height = velocity;
@@ -33,19 +34,24 @@ export default class BulletEntity extends Phaser.GameObjects.Rectangle {
       var d = new Date();
 this.birthTime = d.getTime();
 this.scene.physics.add.existing(this);
-(this.body as Phaser.Physics.Arcade.Body).setSize(3,3);
-(this.body as Phaser.Physics.Arcade.Body).setOffset(1,4);
-(this.body as Phaser.Physics.Arcade.Body).onOverlap = true;
+(this.body as Phaser.Physics.Arcade.Body).setSize(5,5);
+(this.body as Phaser.Physics.Arcade.Body).setOffset(2,5);
+//(this.body as Phaser.Physics.Arcade.Body).onOverlap = true;
     }
 
     public update(time:number,delta:number): void{
       delta/=17;
+      let scene: MainScene = (this.scene as MainScene);
+
+      var tile = scene.map.getTileAtWorldXY( this.x, this.y, true, scene.cameras.main, "foreground");
+      if( tile!=null&&tile.index!=-1 ) { this.collidesWall();      return;}
+
       //console.log(delta);
       var newLoc: Phaser.Math.Vector2;
       // newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(this.x,this.y),this.rotation*180/Math.PI-90,this.height*delta);
-      newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),this.rotation*180/Math.PI-90,this.height);
-      (this.body as Phaser.Physics.Arcade.Body).setVelocityX(newLoc.x *12);
-      (this.body as Phaser.Physics.Arcade.Body).setVelocityY(newLoc.y *12);
+      newLoc = PhaserLib.findNewPoint(new Phaser.Math.Vector2(0,0),this.rotation*180/Math.PI-90,this.height*28);
+      (this.body as Phaser.Physics.Arcade.Body).setVelocityX(newLoc.x);
+      (this.body as Phaser.Physics.Arcade.Body).setVelocityY(newLoc.y);
       // this.x=newLoc.x;
       // this.y=newLoc.y;
       this.height-=0.3*delta;

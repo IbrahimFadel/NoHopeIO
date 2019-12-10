@@ -50,6 +50,7 @@ layer.setScale(1);
 		this.player = new PlayerEntity(this, 100, 100, 'player', 1);
 		this.physics.add.collider(this.player, walls);
 		this.physics.add.collider(this.player.playerBullets, walls, bullet => {
+			console.log("collided");
 			(bullet as BulletEntity).collidesWall();
 		});
 		// walls.setTileIndexCallback(4, (bullet,tile) => {
